@@ -1,23 +1,45 @@
-export function fetchLatestKline(historical_prices) {
-    fetch(historical_prices)
-    .then(response => response.json())
-    .then(data => {
-        const kline = data[0];
-        console.log("Latest Kline:");
-        console.log({
-            openTime: new Date(kline[0]).toISOString(),
-            open: kline[1],
-            high: kline[2],
-            low: kline[3],
-            close: kline[4],
-            volume: kline[5],
-            closeTime: new Date(kline[6]).toISOString(),
-        });
-    })
-    .catch(error => console.error("Error fetching Kline:", error));
+export async function CryptofetchKline(symbol, interval) {
+  const historical_prices = `https://api.binance.com/api/v3/klines?symbol=${symbol}USDT&interval=${interval}&limit=60`;
+
+  try {
+    const latestKline = await fetchLatestKline(historical_prices);
+    console.log(latestKline);
+
+    return { latestKline };
+  } catch (error) {
+    console.error("Fehler beim Abrufen der Krypto-Daten:", error);
+    throw error;
+  }
 }
 
-//setInterval(fetchLatestKline, fetchLatestKlinetime);
+export function fetchLatestKline(historical_prices) {
+    return fetch(historical_prices)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP-Error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const kline = data[0];
+        if (!kline) {
+          throw new Error("No Kline data available");
+        }
+        return {
+          openTime: new Date(kline[0]).toISOString(),
+          open: parseFloat(kline[1]),
+          high: parseFloat(kline[2]),
+          low: parseFloat(kline[3]),
+          close: parseFloat(kline[4]),
+          volume: parseFloat(kline[5]),
+          closeTime: new Date(kline[6]).toISOString(),
+        };
+      })
+      .catch(error => {
+        console.error("Error fetching Kline:", error);
+        throw error;
+      });
+}
 
 /*[
     [
