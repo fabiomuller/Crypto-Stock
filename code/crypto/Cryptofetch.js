@@ -1,5 +1,5 @@
-import fetchhistoricalPrices from './fetchhistoricalPrices.js';
-import fetchLatestKline from 'fetchLatestKline';
+import { fetchhistoricalPrices } from './fetchhistoricalPrices.js';
+import { fetchLatestKline } from './fetchLatestKline.js';
 
 const symbol = "SOLUSDT";
 const interval = "1m";
