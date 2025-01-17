@@ -1,23 +1,23 @@
 export function fetchLatestKline(historical_prices) {
-  fetch(historical_prices)
-  .then(response => response.json())
-  .then(data => {
-      const kline = data[0];
-      console.log("Latest Kline:");
-      console.log({
-          openTime: new Date(kline[0]).toISOString(),
-          open: kline[1],
-          high: kline[2],
-          low: kline[3],
-          close: kline[4],
-          volume: kline[5],
-          closeTime: new Date(kline[6]).toISOString(),
-      });
-  })
-  .catch(error => console.error("Error fetching Kline:", error));
+    fetch(historical_prices)
+    .then(response => response.json())
+    .then(data => {
+        const kline = data[0];
+        console.log("Latest Kline:");
+        console.log({
+            openTime: new Date(kline[0]).toISOString(),
+            open: kline[1],
+            high: kline[2],
+            low: kline[3],
+            close: kline[4],
+            volume: kline[5],
+            closeTime: new Date(kline[6]).toISOString(),
+        });
+    })
+    .catch(error => console.error("Error fetching Kline:", error));
 }
 
-setInterval(fetchLatestKline, fetchLatestKlinetime);
+//setInterval(fetchLatestKline, fetchLatestKlinetime);
 
 /*[
     [
@@ -34,4 +34,4 @@ setInterval(fetchLatestKline, fetchLatestKlinetime);
         '482872920.51139000',  // Taker Buy Quote Asset Volume (Value of the base asset in the quote currency bought by takers)
         '0'  // Usually "ignore" or additional data (not typically relevant)
     ]
-]*/
+]*/ 
