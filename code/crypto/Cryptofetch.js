@@ -1,7 +1,10 @@
-const symbol = "SOLUSDT";
-const url = "https://api.binance.com/api/v3/ticker/price?symbol=" + symbol;
+import fetchhistoricalPrices from './fetchhistoricalPrices.js';
+import fetchLatestKline from 'fetchLatestKline';
 
-fetch(url)
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error("Fehler:", error));
+const symbol = "SOLUSDT";
+const interval = "1m";
+const historical_prices = "https://api.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval + "&limit=60";
+
+fetchhistoricalPrices(historical_prices);
+
+fetchLatestKline(historical_prices)
